@@ -1,10 +1,14 @@
 import tkinter 
 
+overlap = False
+
 app = tkinter.Tk() 
 app.resizable(False, False)
 app.title("sdoku-doku")
 
 def checkB4Running() :
+    global btnList
+    global overlap
     global board 
 
     for row in range(0, 9, 1) : 
@@ -14,19 +18,23 @@ def checkB4Running() :
             if(board[row][col] != 0) : 
                 counter[board[row][col]-1] += 1
 
-        print(f"row[0] : {board[0]}")
-        print(f"counter: {counter}")
-
-        print(f"{row}행 검사: ", end='')
-        for num in range(0, 9, 1) : 
-            if (counter[num] != 0) :
-                print(f"{num+1}: {counter[num]}개", end=' ')
-        print()
-
         for num in range(0, 9, 1) : 
             if (counter[num] >= 2) : 
                 print(f"{row}행 에서 중복 발생, {num+1}이 다수 존재")
-        print()
+                overlap = [0, row, num+1]
+                break
+
+        if (bool(overlap)) :
+            break
+
+    for col in range(0, 9, 1) :
+        pass
+
+    if (bool(overlap)) : 
+        overlap -= 1
+        for col in range(0, 9, 1) : 
+            btnList[overlap][col].config(bg='#F6CECE')
+
 
 
 def numIn(num, i, j, wiget) : 
