@@ -27,13 +27,39 @@ def checkB4Running() :
         if (bool(overlap)) :
             break
 
-    for col in range(0, 9, 1) :
-        pass
+    if (not overlap) :
+        for col in range(0, 9, 1) :
+            counter = [0 for i in range(0, 9, 1)]
+
+            for row in range(0, 9, 1) :
+                if(board[row][col] != 0) :
+                    counter[board[row][col]-1] += 1
+
+            for num in range(0, 9, 1) :
+                if (counter[num] >= 2) :
+                    print(f"{}열에서 중복 발생, {num+1}이 다수 존재")
+                    overlap = [1, col, num+1]
+                    break
+            
+            if (bool(overlap)) :
+                break
 
     if (bool(overlap)) : 
-        overlap -= 1
-        for col in range(0, 9, 1) : 
-            btnList[overlap][col].config(bg='#F6CECE')
+        if (overlap[0] == 0) :
+            for col in range(0, 9, 1) : 
+                if (board[overlap[1]][col] == overlap[2]) :
+                    btnList[overlap[1]][col].config(bg="#F78181")
+                else : 
+                    btnList[overlap[1]][col].config(bg="#F5A9A9")
+        
+        else : 
+            for row in range(0, 9, 1) :
+                if (board[row][overlap[1]] == overlap[2]) : 
+                    btnList[row][overlap[1]].config(bg="#F78181")
+                else : 
+                    btnList[row][overlap[1]].config(bg="#F5A9A9")
+
+    
 
 
 
